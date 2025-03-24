@@ -1,4 +1,4 @@
-package axo
+package frontends
 
 /* Utility function for serving Single Page Applications (SPA).
 It will run development server and reverse proxy for the SPA in development.

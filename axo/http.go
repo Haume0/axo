@@ -2,7 +2,10 @@ package axo
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 )
 
 type errorResponse struct {
@@ -26,7 +29,13 @@ func Error(w http.ResponseWriter, message string, status int) {
 	w.Write(res)
 }
 
-// StaticFileHandler serves static files from the given directory
-func StaticFileHandler(directory string) http.Handler {
-	return http.StripPrefix("/", http.FileServer(http.Dir(directory)))
+// ReverseProxy is the reverse proxy for the API
+func ReverseProxy(w http.ResponseWriter, r *http.Request, target string) {
+	targetURL, err := url.Parse(target)
+	if err != nil {
+		log.Fatalf("URL parse error: %v", err)
+	}
+	proxy := httputil.NewSingleHostReverseProxy(targetURL)
+	// ReverseProxy
+	proxy.ServeHTTP(w, r)
 }

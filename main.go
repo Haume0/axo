@@ -2,6 +2,7 @@ package main
 
 import (
 	"axo/axo"
+	"axo/axo/frontends"
 	"axo/database"
 	"axo/img"
 	"axo/middlewares"
@@ -15,7 +16,7 @@ import (
 🪐 Welcome to Axo ✨
 AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and gorm.
 It is designed to be simple, fast, and easy to use.
-For more information, please visit: https://haume.me/axo-scaffold
+For more information, please visit: https://haume.me/axo
 
 Licanse: MIT
 Copyright (c) 2025 Haume
@@ -36,6 +37,9 @@ func main() {
 	router.HandleFunc("GET /error", routes.GetError)
 	router.HandleFunc("GET /hello", routes.GetHello)
 
+	// 🌍 Serving the Single Page Application
+	frontends.ServeSPA(router, "npm run dev", "5173", "./site", "./site/dist")
+
 	// 🏙️ Image Optimization
 	if os.Getenv("IMG_OPTIMIZE") == "true" {
 		img.Init()
@@ -43,7 +47,7 @@ func main() {
 	}
 
 	// 🏗️ Static File Server
-	router.Handle("/", axo.StaticFileHandler("static"))
+	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// ⚙️ Adding middlewares
 	handler := middlewares.Logger(router)
