@@ -1,5 +1,14 @@
 package main
 
+import (
+	"axo/axo"
+	"axo/middlewares"
+	"axo/routes"
+	"fmt"
+	"net/http"
+	"os"
+)
+
 /*
 🪐 Welcome to Axo ✨
 AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and gorm.
@@ -13,10 +22,35 @@ It's not neccesary but i'll be greatful if you give me a star on GitHub and ment
 
 func main() {
 	// 🔐 Getting the environment variables
+	InitDotenv()
+
 	// 🏁 Initializations
 	// 🏗️ Creating the router
+	router := http.NewServeMux()
+
 	// 🌐 Registering the routes
+	router.HandleFunc("GET /error", routes.GetError)
+	router.HandleFunc("GET /hello", routes.GetHello)
+
+	// 🏗️ Static File Server
+	router.Handle("/", axo.StaticFileHandler("static"))
+
 	// ⚙️ Adding middlewares
+	handler := middlewares.Logger(router)
+
 	// 💢 Adding cors setup
-	// 🚦 Starting the server
+	handler = middlewares.Cors(handler)
+
+	// 🚀 Starting the server
+	var port = os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	println("🪸 Axo is live! 🌊")
+	fmt.Printf("👀 You can see it on:\n")
+	for _, ip := range axo.HostIPs() {
+		fmt.Printf("\033[1;34mhttp://%v:%v\033[0m\n", ip, port)
+	}
+	http.ListenAndServe(":"+port, handler)
+
 }
