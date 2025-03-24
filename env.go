@@ -53,7 +53,7 @@ const defaultDotenv = `
 PORT=3000
 HOST=0.0.0.0
 
-# TLS Values *If you don't use TLS, you can remove these values or leave them empty.
+# TLS Values * If you don't use TLS, you can remove these values or leave them empty.
 # If you're using TLS, you need to set the values for these variables.
 # CERT_FILE=cert.pem
 # KEY_FILE=key.pem
@@ -68,7 +68,14 @@ HOST=0.0.0.0
 # DB_SSLMODE=disable
 # DB_TIMEZONE=Europe/Istanbul
 
-# JWT Values *This project using JWT for authentication.
+# JWT Values * This project using JWT for authentication.
 JWT_SECRET=secret
 JWT_EXPIRATION=1h
+
+# Email Values * This project using SMTP for sending emails.
+# EMAIL_FROM=your-email@example.com
+# EMAIL_PASSWORD=your-email-password
+# SMTP_HOST=smtp.example.com
+# SMTP_PORT=587
+# SMTP_NOSSL=false
 `
