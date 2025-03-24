@@ -3,6 +3,7 @@ package main
 import (
 	"axo/axo"
 	"axo/database"
+	"axo/img"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -35,6 +36,12 @@ func main() {
 	router.HandleFunc("GET /error", routes.GetError)
 	router.HandleFunc("GET /hello", routes.GetHello)
 
+	// 🏙️ Image Optimization
+	if os.Getenv("IMG_OPTIMIZE") == "true" {
+		img.Init()
+		router.HandleFunc("/image", img.Optimize)
+	}
+
 	// 🏗️ Static File Server
 	router.Handle("/", axo.StaticFileHandler("static"))
 
@@ -49,7 +56,7 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
-	println("🪸 Axo is live! 🌊")
+	fmt.Println("🪸 Axo is live! 🌊")
 	fmt.Printf("👀 You can see it on:\n")
 	for _, ip := range axo.HostIPs() {
 		fmt.Printf("\033[1;34mhttp://%v:%v\033[0m\n", ip, port)
