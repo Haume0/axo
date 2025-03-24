@@ -38,6 +38,7 @@ func InitDotenv() {
 			return
 		}
 	} else {
+		fmt.Print("\033[H\033[2J")
 		fmt.Println("✅ .env file founded.")
 	}
 }
@@ -64,6 +65,8 @@ HOST=0.0.0.0
 # DB_USER=root
 # DB_PASSWORD=123
 # DB_NAME=app
+# DB_SSLMODE=disable
+# DB_TIMEZONE=Europe/Istanbul
 
 # JWT Values *This project using JWT for authentication.
 JWT_SECRET=secret

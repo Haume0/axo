@@ -2,6 +2,7 @@ package main
 
 import (
 	"axo/axo"
+	"axo/database"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -21,10 +22,12 @@ It's not neccesary but i'll be greatful if you give me a star on GitHub and ment
 */
 
 func main() {
-	// 🔐 Getting the environment variables
+	// 🔐 Getting the environment variables !! Dont put any print operation above .env initialization. !!
 	InitDotenv()
 
-	// 🏁 Initializations
+	// 🏁 Initializations !! Please do not change the order of the initialization operations. !!
+	database.Init()
+
 	// 🏗️ Creating the router
 	router := http.NewServeMux()
 
