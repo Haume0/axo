@@ -4,6 +4,7 @@ import (
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
+	"axo/img"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -41,8 +42,8 @@ func main() {
 
 	// 🏙️ Image Optimization
 	if os.Getenv("IMG_OPTIMIZE") == "true" {
-		// img.Init()
-		// router.HandleFunc("/image", img.Optimize)
+		img.Init()
+		router.HandleFunc("/image", img.Optimize)
 	}
 
 	// 🏗️ Static File Server
