@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -15,18 +14,13 @@ func Logger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var currentTime = time.Now().Format("2006-01-02 15:04:05")
 		var clientIPAdress = r.RemoteAddr
-
-		if !strings.Contains(r.URL.Path, "/api/") || strings.Contains(r.URL.Path, "/api/user") {
-			next.ServeHTTP(w, r)
-			return
-		}
 		var fullpath = r.URL.Path
 		if r.URL.RawQuery != "" {
 			fullpath = fullpath + "?" + r.URL.RawQuery
 		}
 		var logText = fmt.Sprintf("[AXO]:[%s] 👤|%s| 🚦[%s] 🔗 %s \n", currentTime, clientIPAdress, r.Method, fullpath)
 		if os.Getenv("NOLOG") == "" {
-			// fmt.Println(logText)
+			fmt.Print(logText)
 			log = fmt.Sprintf("%v\n%v", log, logText)
 			// Write log to file
 			var logFile, err = os.OpenFile("log.clf", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)

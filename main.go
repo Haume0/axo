@@ -4,6 +4,7 @@ import (
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
+	"axo/img"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -39,11 +40,11 @@ func main() {
 	// 🌍 Serving the Single Page Application
 	frontends.ServeSPA(router, "npm run dev", "5173", "./site", "./site/dist")
 
-	// // 🏙️ Image Optimization
-	// if os.Getenv("IMG_OPTIMIZE") == "true" {
-	// 	img.Init()
-	// 	router.HandleFunc("/image", img.Optimize)
-	// }
+	// 🏙️ Image Optimization
+	if os.Getenv("IMG_OPTIMIZE") == "true" {
+		img.Init()
+		router.HandleFunc("/image", img.Optimize)
+	}
 
 	// 🏗️ Static File Server
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -62,8 +63,14 @@ func main() {
 	fmt.Println("🪸 Axo is live! 🌊")
 	fmt.Printf("👀 You can see it on:\n")
 	for _, ip := range axo.HostIPs() {
-		fmt.Printf("\033[1;34mhttp://%v:%v\033[0m\n", ip, port)
+		if os.Getenv("HOST") == "localhost" {
+			fmt.Println("\033[1;90m🌐 Running on localhost! Set HOST=0.0.0.0 to publish on all IPs.\033[0m")
+			fmt.Printf("\033[1;34mhttp://localhost:%v\033[0m\n", port)
+			break
+		} else {
+			fmt.Printf("\033[1;34mhttp://%v:%v\033[0m\n", ip, port)
+		}
 	}
-	http.ListenAndServe(":"+port, handler)
+	http.ListenAndServe(os.Getenv("HOST")+":"+port, handler)
 
 }

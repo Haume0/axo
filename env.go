@@ -31,6 +31,8 @@ func InitDotenv() {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("✅ Default .env file created")
 			fmt.Println("⚙️ Please edit values in the .env file")
+			fmt.Println("👋 Bye!")
+			os.Exit(0)
 		} else {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("\n👌 Continue without .env file!")
@@ -51,7 +53,7 @@ const defaultDotenv = `
 
 # Server Values
 PORT=3000
-HOST=0.0.0.0
+HOST=localhost
 
 # TLS Values * If you don't use TLS, you can remove these values or leave them empty.
 # If you're using TLS, you need to set the values for these variables.
