@@ -4,7 +4,6 @@ import (
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
-	"axo/img"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -18,7 +17,7 @@ AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and gorm.
 It is designed to be simple, fast, and easy to use.
 For more information, please visit: https://haume.me/axo
 
-Licanse: MIT
+License: MIT
 Copyright (c) 2025 Haume
 It's not neccesary but i'll be greatful if you give me a star on GitHub and mention me in your project.
 */
@@ -40,11 +39,11 @@ func main() {
 	// 🌍 Serving the Single Page Application
 	frontends.ServeSPA(router, "npm run dev", "5173", "./site", "./site/dist")
 
-	// 🏙️ Image Optimization
-	if os.Getenv("IMG_OPTIMIZE") == "true" {
-		img.Init()
-		router.HandleFunc("/image", img.Optimize)
-	}
+	// // 🏙️ Image Optimization
+	// if os.Getenv("IMG_OPTIMIZE") == "true" {
+	// 	img.Init()
+	// 	router.HandleFunc("/image", img.Optimize)
+	// }
 
 	// 🏗️ Static File Server
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

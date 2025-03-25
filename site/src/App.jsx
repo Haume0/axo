@@ -20,7 +20,7 @@ function App() {
         more information, please click the logo above.
       </p>
       <p className="read-the-docs">
-        Licanse: MIT <br />
+        License: MIT <br />
         Copyright (c) 2025 Haume
       </p>
     </>
