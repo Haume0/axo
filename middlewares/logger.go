@@ -19,8 +19,13 @@ func Logger(next http.Handler) http.Handler {
 			fullpath = fullpath + "?" + r.URL.RawQuery
 		}
 		var logText = fmt.Sprintf("[AXO]:[%s] 👤|%s| 🚦[%s] 🔗 %s \n", currentTime, clientIPAdress, r.Method, fullpath)
+		var print = fmt.Sprintf(
+			"\033[36m[AXO]\033[0m \033[90m%s\033[0m | \033[33m%s\033[0m | 🚦 \033[32m%s\033[0m | \033[34m%s\033[0m\n",
+			currentTime, clientIPAdress, r.Method, fullpath,
+		)
+
 		if os.Getenv("NOLOG") == "" {
-			fmt.Print(logText)
+			fmt.Print(print)
 			log = fmt.Sprintf("%v\n%v", log, logText)
 			// Write log to file
 			var logFile, err = os.OpenFile("log.clf", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
