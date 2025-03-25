@@ -32,13 +32,14 @@ func main() {
 
 	// 🏗️ Creating the router
 	router := http.NewServeMux()
+	site := http.NewServeMux()
 
 	// 🌐 Registering the routes
 	router.HandleFunc("GET /error", routes.GetError)
 	router.HandleFunc("GET /hello", routes.GetHello)
 
 	// 🌍 Serving the Single Page Application
-	frontends.ServeSPA(router, "npm run dev", "5173", "./site", "./site/dist")
+	frontends.ServeSPA(site, "npm run dev", "5173", "./site", "./site/dist")
 
 	// 🏙️ Image Optimization
 	if os.Getenv("IMG_OPTIMIZE") == "true" {
@@ -49,11 +50,16 @@ func main() {
 	// 🏗️ Static File Server
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	// ⚙️ Adding middlewares
-	handler := middlewares.Logger(router)
+	// ⚙️ Adding middlewares to router
+	routerWithMiddlewares := middlewares.Logger(router)
 
-	// 💢 Adding cors setup
-	handler = middlewares.Cors(handler)
+	// 💢 Adding cors setup to router
+	routerWithMiddlewares = middlewares.Cors(routerWithMiddlewares)
+
+	// Combining router and site
+	handler := http.NewServeMux()
+	handler.Handle("/api/", http.StripPrefix("/api", routerWithMiddlewares))
+	handler.Handle("/", site)
 
 	// 🚀 Starting the server
 	var port = os.Getenv("PORT")
