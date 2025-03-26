@@ -1,42 +1,67 @@
-import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [exampleUrl, setExampleUrl] = useState("/api/hello");
   return (
-    <>
+    <main className="w-full relative flex flex-col items-center gap-4 justify-center p-8 text-center">
       <div>
         <a href="https://haume.me/axo" target="_blank">
-          <img src="/api/static/axo.webp" className="logo" alt="Vite logo" />
+          <img
+            src="/api/static/axo.webp"
+            className="h-32 transition-all hover:drop-shadow-[0_0_2em_#646cffaa]"
+            alt="Vite logo"
+          />
         </a>
       </div>
-      <h1>🪸 Welcome to Axo 🌊</h1>
-      <p>
+      <h1 className="text-3xl font-bold">🪸 Welcome to Axo 🌊</h1>
+      <p className="">
         AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and
         gorm. <br /> It is designed to be simple, fast, and easy to use. For
         more information, please click the logo above.
       </p>
-      <span
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "1.2rem",
-          gap: "0.725rem",
-        }}>
-        <a href="/api/hello">
-          <button>Hello Example</button>
-        </a>
-        <a href="/api/error">
-          <button>Error Example</button>
-        </a>
-        <a href="/api/image?src=/api/static/axo.webp&format=webp&quality=75&width=480&height=480">
-          <button>Image Optimization</button>
-        </a>
-      </span>
-      <p className="read-the-docs">
+      <p className="text-white/40 text-sm">
         License: MIT <br />
         Copyright (c) 2025 Haume
       </p>
-    </>
+      <div className="flex justify-center items-center  gap-3">
+        <button
+          onClick={() => {
+            setExampleUrl("/api/hello");
+          }}>
+          Hello Example
+        </button>
+        <button
+          onClick={() => {
+            setExampleUrl("/api/error");
+          }}>
+          Error Example
+        </button>
+        <button
+          onClick={() => {
+            setExampleUrl(
+              "/api/image?src=axo.webp&format=jpeg&quality=80&width=200&height=200"
+            );
+          }}>
+          Image Optimization
+        </button>
+      </div>
+      <div className="inline-flex justify-center items-center gap-3 w-[27rem]">
+        <input
+          type="text"
+          name="url"
+          value={exampleUrl}
+          readOnly
+          className="w-full h-11 rounded-lg px-4 text-sm font-mono bg-black/40 outline-none border-none"
+        />
+        <a href={exampleUrl} target="_blank">
+          <button>Open</button>
+        </a>
+      </div>
+      <iframe
+        src={exampleUrl}
+        className="rounded-2xl w-[27rem] h-[27rem] p-4 bg-black/40"
+        frameBorder="0"></iframe>
+    </main>
   );
 }
 
