@@ -37,7 +37,7 @@ var (
 	cacheMutex     sync.RWMutex
 )
 
-func Init() {
+func Init(router *http.ServeMux, route string) {
 	staticPath = os.Getenv("STATIC_PATH")
 	UseBreakpoints = os.Getenv("USE_BREAKPOINTS") == "true"
 	BreakpointList = struct {
@@ -53,6 +53,8 @@ func Init() {
 	cacheExp = parseEnvToInt("CACHE_EXPIRATION", 14400)  // 4 hours
 	maxCacheSize = parseEnvToInt("MAX_CACHE_SIZE", 1024) // Maximum amount of items in the cache
 	memoryCache = expirable.NewLRU[string, []byte](maxCacheSize, nil, time.Duration(cacheExp)*time.Second)
+
+	router.HandleFunc(route, Optimize)
 }
 
 func parseEnvToInt(envVar string, defaultValue int) int {

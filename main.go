@@ -41,11 +41,8 @@ func main() {
 	// 🌍 Serving the Single Page Application
 	frontends.ServeSPA(site, "npm run dev", "5173", "./site", "./site/dist")
 
-	// 🏙️ Image Optimization
-	if os.Getenv("IMG_OPTIMIZE") == "true" {
-		img.Init()
-		router.HandleFunc("/image", img.Optimize)
-	}
+	// 🏙️ Image Optimization *Comment out if you don't want image optimization!
+	img.Init(router, "/image")
 
 	// 🏗️ Static File Server
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
