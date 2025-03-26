@@ -13,7 +13,7 @@ import (
 )
 
 /*
-🪐 Welcome to Axo ✨
+🪸 Welcome to Axo 🌊
 AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and gorm.
 It is designed to be simple, fast, and easy to use.
 For more information, please visit: https://haume.me/axo

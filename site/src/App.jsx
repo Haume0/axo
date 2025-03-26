@@ -1,11 +1,6 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <div>
@@ -13,7 +8,7 @@ function App() {
           <img src="/api/static/axo.webp" className="logo" alt="Vite logo" />
         </a>
       </div>
-      <h1>🪐 Welcome to Axo ✨</h1>
+      <h1>🪸 Welcome to Axo 🌊</h1>
       <p>
         AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and
         gorm. <br /> It is designed to be simple, fast, and easy to use. For
