@@ -1,6 +1,13 @@
 package axo
 
-// Unwrap panics if err is not nil, otherwise returns v
+/*
+	Quality of Life Functions
+	These functions are designed to make error handling easier and preventing code duplication.
+	They are not meant to be used in certain cases, such as no way to get the error or when
+	the error is not important.
+*/
+
+// Unwrap is a utility function that returns the value if there is no error, otherwise it panics.
 func Unwrap[T any](v T, err error) T {
 	if err != nil {
 		panic(err) // Rust'taki unwrap() gibi hata alırsa programı durdurur
@@ -8,10 +15,9 @@ func Unwrap[T any](v T, err error) T {
 	return v
 }
 
-// Ok returns a pointer to the value if there is no error, otherwise nil
+// Ok is a utility function that returns a pointer to the value if there is no error, otherwise it prints the error and returns nil.
 func Ok[T any](v T, err error) *T {
 	if err != nil {
-
 		println(err.Error())
 		return nil
 	}
