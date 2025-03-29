@@ -4,7 +4,6 @@ import (
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
-	"axo/img"
 	"axo/middlewares"
 	"axo/routes"
 	"fmt"
@@ -37,12 +36,21 @@ func main() {
 	// 🌐 Registering the routes
 	router.HandleFunc("GET /error", routes.GetError)
 	router.HandleFunc("GET /hello", routes.GetHello)
+	router.HandleFunc("GET /testmail", routes.MailTest)
 
 	// 🌍 Serving the Single Page Application
 	frontends.ServeSPA(site, "npm run dev", "5173", "./site", "./site/dist")
 
-	// 🏙️ Image Optimization *Comment out if you don't want image optimization!
-	img.Init(router, "/image")
+	// 🏙️ Image Optimization
+	//?[1] Comment out if you don't want image optimization!
+	// img.Init(router, "/image")
+	//?[2] and open this.
+	router.HandleFunc("/image", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"message": "Image optimization is disabled!"}`))
+	})
+	// 🏙️ Image Optimization
 
 	// 🏗️ Static File Server
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

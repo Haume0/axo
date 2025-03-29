@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function App() {
   const [exampleUrl, setExampleUrl] = useState("/api/hello");
+  const [mloading, _mloading] = useState(false);
   return (
     <main className="w-full relative flex flex-col items-center gap-4 justify-center p-8 text-center">
       <div>
@@ -61,6 +62,35 @@ function App() {
         src={exampleUrl}
         className="rounded-2xl w-[27rem] h-[27rem] p-4 bg-black/40"
         frameBorder="0"></iframe>
+      <h4 className="text-2xl font-bold">Test Mail!</h4>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          _mloading(true);
+          let formdata = new FormData(e.currentTarget);
+          let mail = formdata.get("email");
+          const res = await fetch(`/api/testmail?mail=${mail}`);
+          if (res.ok) {
+            const a = await res.json();
+            alert(a.message);
+          } else {
+            const a = await res.json();
+            alert(a.error);
+          }
+          _mloading(false);
+        }}
+        className={`flex gap-2 w-[27rem] ease-in-out duration-700 ${
+          mloading && "scale-95 blur-[2px] opacity-60"
+        }`}>
+        <input
+          className="w-full h-11 rounded-lg px-4 text-sm bg-black/40 outline-none border-none"
+          type="email"
+          name="email"
+          placeholder="Enter a mail adress!"
+          id="email"
+        />
+        <button>Send</button>
+      </form>
     </main>
   );
 }
