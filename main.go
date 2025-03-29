@@ -38,8 +38,10 @@ func main() {
 	router.HandleFunc("GET /hello", routes.GetHello)
 	router.HandleFunc("GET /testmail", routes.MailTest)
 
-	// 🌍 Serving the Single Page Application
-	frontends.ServeSPA(site, "npm run dev", "5173", "./site", "./site/dist")
+	// 🌍 Serving the Single Page Application (SPA)
+	frontends.ServeSPA(site, "/", "npm run dev", "5173", "./site", "./site/dist")
+	// 🌍 Serving the Multi Page Application (MPA)
+	// frontends.ServeStatic(site, "/", "./site/dist")
 
 	// 🏙️ Image Optimization
 	//?[1] Comment out if you don't want image optimization!

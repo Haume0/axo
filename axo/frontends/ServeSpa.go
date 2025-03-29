@@ -43,7 +43,20 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
 }
 
-func ServeSPA(router *http.ServeMux, devCommand string, port string, sitePath string, distPath string) {
+// ServeSPA sets up a Single Page Application (SPA) server with support for both
+// development and production modes. In development mode, it starts a development
+// server (e.g., Vite) and proxies requests to it. In production mode, it serves
+// static files from a specified distribution directory.
+//
+// Parameters:
+//
+//	router     - *http.ServeMux: The HTTP router to handle incoming requests.
+//	route      - string: The URL path prefix for the SPA (e.g., "/").
+//	devCommand - string: The command to start the development server (e.g., "npm run dev").
+//	port       - string: The port number for the development server to listen on.
+//	sitePath   - string: The root directory of the project, used to run the development server.
+//	distPath   - string: The directory containing the production build of the SPA.
+func ServeSPA(router *http.ServeMux, route string, devCommand string, port string, sitePath string, distPath string) {
 	// Website Route
 	// Development mode
 	if os.Args[len(os.Args)-1] != "--prod" {
@@ -61,7 +74,7 @@ func ServeSPA(router *http.ServeMux, devCommand string, port string, sitePath st
 			}
 		}()
 		// Proxy to vite development server
-		router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
 			// Proxy to vite development server 5173 to /
 			proxyURL := "http://localhost:" + port
 			//reverse proxy to vite development server
