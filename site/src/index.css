@@ -22,5 +22,13 @@ button {
 }
 
 hr {
-  @apply border-zinc-300 dark:border-zinc-700 border-[1px] w-full;
+  @apply border-black/5 dark:border-white/5 border-[1px] w-full;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"] {
+  @apply w-full h-12 rounded-lg px-4 text-sm bg-black/10 dark:bg-black/20 outline-none border-none;
 }

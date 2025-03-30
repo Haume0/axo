@@ -65,7 +65,7 @@ function App() {
           name="url"
           value={exampleUrl}
           readOnly
-          className="w-full h-12 rounded-lg px-4 text-sm font-mono bg-black/10 dark:bg-black/20 outline-none border-none"
+          className="font-mono"
         />
         <a href={exampleUrl} target="_blank">
           <button>Open</button>
@@ -97,7 +97,6 @@ function App() {
           mloading && "scale-95 blur-[2px] opacity-60"
         }`}>
         <input
-          className="w-full h-12 rounded-lg px-4 text-sm bg-black/10 dark:bg-black/20 outline-none border-none"
           type="email"
           name="email"
           placeholder="Enter a mail adress!"
@@ -123,12 +122,7 @@ function App() {
           e.target.elements.Note.value = "";
         }}
         className="flex gap-2 w-full">
-        <input
-          type="text"
-          name="Note"
-          placeholder="Enter a note!"
-          className="w-full h-12 rounded-lg px-4 text-sm font-mono bg-black/10 dark:bg-black/20 outline-none border-none"
-        />
+        <input type="text" name="Note" placeholder="Enter a note!" />
         <button>Add</button>
       </form>
       <ul className="w-full min-h-[24rem] rounded-2xl gap-2 flex flex-col p-2 text-sm bg-black/10 dark:bg-black/20 outline-none border-none">
