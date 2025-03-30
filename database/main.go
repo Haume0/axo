@@ -10,6 +10,11 @@ import (
 	"gorm.io/gorm"
 )
 
+/*
+Gorm Document
+https://gorm.io/docs/
+*/
+
 var DB *gorm.DB
 
 func Init() {
@@ -33,5 +38,6 @@ func Init() {
 	fmt.Println("✅ Connected to the database")
 
 	// Migrate the schema to create the tables
-	DB.AutoMigrate(&schemas.Product{})
+	DB.AutoMigrate(&schemas.Note{})
+	println("✅ Database schema migrated")
 }

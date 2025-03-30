@@ -1,22 +1,26 @@
 @import "tailwindcss";
 
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 :root {
-    @apply bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white;
+  @apply bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white;
 }
 
 button {
-    @apply dark:bg-black/20 bg-black/10 px-5 h-12 rounded-lg outline-1 outline-transparent hover:outline-sky-500 ease-in-out duration-200 cursor-pointer;
+  @apply dark:bg-black/20 bg-black/10 px-5 h-12 rounded-lg text-nowrap outline-1 outline-transparent hover:outline-sky-500 ease-in-out duration-200 cursor-pointer;
+}
+
+hr {
+  @apply border-zinc-300 dark:border-zinc-700 border-[1px] w-full;
 }
