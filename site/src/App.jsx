@@ -20,7 +20,7 @@ function App() {
         gorm. <br /> It is designed to be simple, fast, and easy to use. For
         more information, please click the logo above.
       </p>
-      <p className="text-white/40 text-sm">
+      <p className="dark:text-white/40 text-black/20 text-sm">
         License: MIT <br />
         Copyright (c) 2025 Haume
       </p>
@@ -28,21 +28,24 @@ function App() {
         <button
           onClick={() => {
             setExampleUrl("/api/hello");
-          }}>
+          }}
+        >
           Hello Example
         </button>
         <button
           onClick={() => {
             setExampleUrl("/api/error");
-          }}>
+          }}
+        >
           Error Example
         </button>
         <button
           onClick={() => {
             setExampleUrl(
-              "/api/image?src=axo.webp&format=jpeg&quality=80&width=200&height=200"
+              "/api/image?src=axo.webp&format=jpeg&quality=80&width=200&height=200",
             );
-          }}>
+          }}
+        >
           Image Optimization
         </button>
       </div>
@@ -52,7 +55,7 @@ function App() {
           name="url"
           value={exampleUrl}
           readOnly
-          className="w-full h-11 rounded-lg px-4 text-sm font-mono bg-black/40 outline-none border-none"
+          className="w-full h-12 rounded-lg px-4 text-sm font-mono bg-black/10 dark:bg-black/20 outline-none border-none"
         />
         <a href={exampleUrl} target="_blank">
           <button>Open</button>
@@ -60,8 +63,9 @@ function App() {
       </div>
       <iframe
         src={exampleUrl}
-        className="rounded-2xl w-[27rem] h-[27rem] p-4 bg-black/40"
-        frameBorder="0"></iframe>
+        className="rounded-2xl w-[27rem] h-[27rem] p-4 bg-black/10 dark:bg-black/20"
+        frameBorder="0"
+      ></iframe>
       <h4 className="text-2xl font-bold">Test Mail!</h4>
       <form
         onSubmit={async (e) => {
@@ -81,9 +85,10 @@ function App() {
         }}
         className={`flex gap-2 w-[27rem] ease-in-out duration-700 ${
           mloading && "scale-95 blur-[2px] opacity-60"
-        }`}>
+        }`}
+      >
         <input
-          className="w-full h-11 rounded-lg px-4 text-sm bg-black/40 outline-none border-none"
+          className="w-full h-12 rounded-lg px-4 text-sm bg-black/10 dark:bg-black/20 outline-none border-none"
           type="email"
           name="email"
           placeholder="Enter a mail adress!"
