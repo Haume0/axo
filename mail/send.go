@@ -9,7 +9,34 @@ import (
 	"strconv"
 )
 
-// Send sends an email to the target with the title and content
+// Send sends an email to a specified recipient.
+//
+// This function creates and sends an email with support for both plain text and HTML content.
+// It handles different SMTP ports (587 for STARTTLS and 465 for SSL/TLS) and supports optional
+// TLS verification skipping. The email configuration is loaded from environment variables.
+//
+// Environment Variables Required:
+//   - EMAIL_FROM: Sender email address
+//   - EMAIL_PASSWORD: Password for the sender email account
+//   - SMTP_HOST: SMTP server hostname
+//   - SMTP_PORT: SMTP server port (typically 587 for STARTTLS or 465 for SSL)
+//   - SMTP_NOSSL: Set to "true" to skip TLS certificate verification (optional)
+//
+// Parameters:
+//   - target string: The recipient's email address
+//   - title string: The subject line for the email
+//   - content string: The body content of the email
+//   - html bool: If true, content will be sent as HTML; otherwise, as plain text
+//
+// Returns:
+//   - error: An error if the sending process fails, or nil if successful
+//
+// Example:
+//
+//	err := mail.Send("recipient@example.com", "Hello", "<h1>Hello World</h1>", true)
+//	if err != nil {
+//	    log.Fatalf("Failed to send email: %v", err)
+//	}
 func Send(target string, title string, content string, html bool) error {
 	from := os.Getenv("EMAIL_FROM")
 	password := os.Getenv("EMAIL_PASSWORD")
