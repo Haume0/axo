@@ -9,24 +9,11 @@ function App() {
   const [exampleUrl, setExampleUrl] = useState("/api/hello");
   return (
     <>
-      <div>
-        <a href="https://haume.me/axo" target="_blank">
-          <img
-            src="/api/static/axo.webp"
-            alt="Vite logo"
-            className="h-32 transition-all hover:drop-shadow-[0_0_2em_#646cffaa]"
-          />
-        </a>
-      </div>
       <h1>🪸 Welcome to Axo 🌊</h1>
       <p className="">
         AxoScaffold is a Restful API scaffold for Go, built on top of stdlib and
         gorm. <br /> It is designed to be simple, fast, and easy to use. For
         more information, please click the logo above.
-      </p>
-      <p className="dark:text-white/40 text-black/20 text-sm">
-        License: MIT <br />
-        Copyright (c) 2025 Haume
       </p>
       <h4 className="mt-6">Examples</h4>
       <div className="flex justify-center w-full items-center gap-3">
@@ -83,7 +70,7 @@ function App() {
         </div>
         <iframe
           src={exampleUrl}
-          className="rounded-2xl w-full h-[27rem] p-4 bg-black/10 dark:bg-black/20"
+          className="rounded-2xl w-full h-[27rem] p-4 bg-comet-500"
         />
       </span>
     </>

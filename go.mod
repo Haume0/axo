@@ -20,7 +20,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/h2non/bimg v1.1.9
 	github.com/hashicorp/golang-lru/v2 v2.0.7
-	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	golang.org/x/sys v0.22.0 // indirect
 	gorm.io/driver/postgres v1.5.11

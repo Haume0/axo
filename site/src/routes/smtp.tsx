@@ -9,16 +9,6 @@ function RouteComponent() {
   const [mloading, _mloading] = useState(false);
   return (
     <>
-      {" "}
-      <div>
-        <a href="https://haume.me/axo" target="_blank">
-          <img
-            src="/api/static/axo.webp"
-            alt="Vite logo"
-            className="h-32 transition-all hover:drop-shadow-[0_0_2em_#646cffaa]"
-          />
-        </a>
-      </div>
       <h1 className="text-3xl font-bold">🪸 Axo Mail System 🌊</h1>
       <p className="">
         To send mails, you need to fill .env or adding required env variables in
@@ -31,10 +21,6 @@ function RouteComponent() {
       <Link to="/">
         <button>← Back to Home</button>
       </Link>
-      <p className="dark:text-white/40 text-black/20 text-sm">
-        License: MIT <br />
-        Copyright (c) 2025 Haume
-      </p>
       <h4 className="mt-12">Test Mail!</h4>
       <form
         onSubmit={async (e) => {

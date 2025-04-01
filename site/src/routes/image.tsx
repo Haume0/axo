@@ -12,15 +12,6 @@ function RouteComponent() {
   );
   return (
     <>
-      <div>
-        <a href="https://haume.me/axo" target="_blank">
-          <img
-            src="/api/static/axo.webp"
-            alt="Vite logo"
-            className="h-32 transition-all hover:drop-shadow-[0_0_2em_#646cffaa]"
-          />
-        </a>
-      </div>
       <h1 className="text-3xl font-bold">🪸 Axo Image Optimization 🌊</h1>
       <p className="">
         This optional feature helps you optimize images at runtime before
@@ -32,10 +23,6 @@ function RouteComponent() {
       <Link to="/">
         <button>← Back to Home</button>
       </Link>
-      <p className="dark:text-white/40 text-black/20 text-sm">
-        License: MIT <br />
-        Copyright (c) 2025 Haume
-      </p>
       <h4 className="mt-12">API Example</h4>
       <div className="inline-flex justify-center items-center gap-3 w-full">
         <input
@@ -62,7 +49,7 @@ function RouteComponent() {
       </div>
       <img
         src={imageUrl}
-        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10 dark:bg-black/20"
+        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10"
         alt=""
       />
       <h4 className="mt-12">Component Example</h4>
@@ -71,14 +58,14 @@ function RouteComponent() {
         provided and communicates them to the server, allowing the image to be
         created in the required dimensions.
       </p>
-      <p className="dark:text-white/40 text-black/20 !text-sm">
+      <p className="text-white/30 text-sm">
         To see the URL of the image created by the component, right-click and
         select "open image in new tab".
       </p>
       <Img
         src="/api/static/axo.webp"
         alt="Vite logo"
-        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10 dark:bg-black/20"
+        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10"
         // width={200} * Component can calculate the required width
         // height={200} * Component can calculate the required height
         quality={80}
