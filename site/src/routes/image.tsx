@@ -1,15 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import Img from "/AxoComponents/Img";
-import { useState } from "react";
+import Img from "../../AxoComponents/Img";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/image")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [imgSpecs, setImgSpecs] = useState({
+    src: "/api/axo.webp",
+    quality: 80,
+    width: 200,
+    height: 200,
+    format: "jpeg",
+  });
   const [imageUrl, setImageUrl] = useState(
-    "/api/image?src=axo.webp&format=jpeg&quality=80&width=200&height=200"
+    "/api/image?src=/api/axo.webp&format=jpeg&quality=80&width=200&height=200"
   );
+
+  useEffect(() => {
+    const { quality, src, width, height, format } = imgSpecs;
+    setImageUrl(
+      `/api/image?src=${src}&format=${format}&quality=${quality}&width=${width}&height=${height}`
+    );
+  }, [imgSpecs]);
+
   return (
     <>
       <h1 className="text-3xl font-bold">🪸 Axo Image Optimization 🌊</h1>
@@ -23,13 +38,94 @@ function RouteComponent() {
       <Link to="/">
         <button>← Back to Home</button>
       </Link>
+      <h4 className="mt-12">Parameters</h4>
+      <p className="text-xs text-white/20">
+        Warning, due to the active breakpoint system, the image may not change
+        until a certain amount of height and width is adjusted.
+      </p>
+      <div className="grid w-full grid-cols-3 grid-flow-row gap-2">
+        <label htmlFor="quality" className="flex flex-col items-start">
+          <span className="text-sm text-white/30">Quality</span>
+          <input
+            type="number"
+            name="quality"
+            defaultValue={80}
+            min={1}
+            max={100}
+            onChange={(e) =>
+              setImgSpecs((prev) => ({
+                ...prev,
+                quality: Number(e.target.value),
+              }))
+            }
+          />
+        </label>
+        <label htmlFor="width" className="flex flex-col items-start">
+          <span className="text-sm text-white/30">Width</span>
+          <input
+            type="number"
+            name="width"
+            defaultValue={200}
+            min={1}
+            onChange={(e) =>
+              setImgSpecs((prev) => ({
+                ...prev,
+                width: Number(e.target.value),
+              }))
+            }
+          />
+        </label>
+        <label htmlFor="height" className="flex flex-col items-start">
+          <span className="text-sm text-white/30">Height</span>
+          <input
+            type="number"
+            name="height"
+            defaultValue={200}
+            min={1}
+            onChange={(e) =>
+              setImgSpecs((prev) => ({
+                ...prev,
+                height: Number(e.target.value),
+              }))
+            }
+          />
+        </label>
+        <select
+          name="format"
+          id="format"
+          onChange={(e) => {
+            setImgSpecs((prev) => ({
+              ...prev,
+              format: e.target.value,
+            }));
+          }}
+          className="block">
+          <option value="jpeg">jpeg</option>
+          <option value="jpg">jpg</option>
+          <option value="webp">webp</option>
+          <option value="png">png</option>
+        </select>
+        <label htmlFor="img" className="flex flex-col col-span-2 items-start">
+          <input
+            type="text"
+            name="img"
+            defaultValue={imgSpecs.src}
+            onChange={(e) =>
+              setImgSpecs((prev) => ({
+                ...prev,
+                src: e.target.value,
+              }))
+            }
+          />
+        </label>
+      </div>
       <h4 className="mt-12">API Example</h4>
       <div className="inline-flex justify-center items-center gap-3 w-full">
         <input
           type="text"
           name="url"
           value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          readOnly
           className="font-mono"
         />
         <a href={imageUrl} target="_blank">
@@ -63,14 +159,14 @@ function RouteComponent() {
         select "open image in new tab".
       </p>
       <Img
-        src="/api/static/axo.webp"
-        alt="Vite logo"
+        src="/api/axo.webp"
+        alt=""
         className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-comet-500"
-        // width={200} * Component can calculate the required width
-        // height={200} * Component can calculate the required height
-        quality={80}
+        // width={200} //? Component can calculate the required width
+        // height={200} //? Component can calculate the required height
+        quality={100}
         loading="lazy"
-        format="jpeg" //default format is jpeg but you can set it to webp, png, jpeg, jpg
+        format={"webp"} //default format is jpeg but you can set it to webp, png, jpeg, jpg
       />
     </>
   );

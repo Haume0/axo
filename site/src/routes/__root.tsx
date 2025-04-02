@@ -7,7 +7,7 @@ export const Route = createRootRoute({
         <div>
           <a href="https://haume.me/axo" target="_blank">
             <img
-              src="/api/static/axo.webp"
+              src="/api/axo.webp"
               alt="Vite logo"
               className="h-32 transition-all hover:drop-shadow-[0_0_2em_#646cffaa]"
             />

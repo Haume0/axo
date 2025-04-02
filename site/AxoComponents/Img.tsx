@@ -7,31 +7,27 @@ interface ImgProps {
   height?: number;
   quality?: number;
   loading?: "lazy" | "eager";
-  format?: "webp" | "png" | "jpeg" | "jpg";
+  format?: "webp" | "png" | "jpeg" | "jpg" | string;
   className?: string;
 }
 
-export default function Img(props: ImgProps) {
-  const {
-    src,
-    alt,
-    width,
-    height,
-    quality,
-    loading = "lazy",
-    format,
-    className,
-  } = props;
-
+export default function Img({
+  src,
+  alt,
+  width,
+  height,
+  quality,
+  loading,
+  format,
+  className,
+}: ImgProps) {
   const [myImg, setMyImg] = useState<string>("");
-  const unique = useRef(Math.random().toString(36).substring(7)).current;
-  const imgRef = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    const imgElement = document.getElementById(`${unique}_image`);
-    if (!imgElement) return;
+    if (!imgRef.current) return;
 
-    let imgWidth = width || imgElement.clientWidth;
+    const imgWidth = width || imgRef.current.clientWidth;
 
     const queryParams = new URLSearchParams({
       src,
@@ -41,18 +37,16 @@ export default function Img(props: ImgProps) {
       ...(format && { format }),
     }).toString();
 
-    const imgUrl = `/api/image?${queryParams}`;
-    setMyImg(imgUrl);
-  }, [src, width, height, quality, format, unique]);
+    setMyImg(`/api/image?${queryParams}`);
+  }, [src, width, height, quality, format]);
 
   return (
     <img
-      id={`${unique}_image`}
+      ref={imgRef}
       src={myImg}
       alt={alt}
       className={className}
       loading={loading}
-      ref={imgRef}
     />
   );
 }

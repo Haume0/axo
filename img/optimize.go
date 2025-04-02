@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	staticPath     string
+	targetPath     string
 	UseBreakpoints bool
 	BreakpointList struct {
 		Width  []int
@@ -36,26 +36,6 @@ var (
 	memoryCache    *expirable.LRU[string, []byte]
 	cacheMutex     sync.RWMutex
 )
-
-func Init(router *http.ServeMux, route string) {
-	staticPath = os.Getenv("STATIC_PATH")
-	UseBreakpoints = os.Getenv("USE_BREAKPOINTS") == "true"
-	BreakpointList = struct {
-		Width  []int
-		Height []int
-	}{
-		Width:  parseEnvToIntSlice("BREAKPOINT_WIDTHS"),
-		Height: parseEnvToIntSlice("BREAKPOINT_HEIGHTS"),
-	}
-	cacheDir = os.Getenv("CACHE_DIR")
-	maxImageWidth = parseEnvToInt("MAX_IMAGE_WIDTH", 1440)
-	maxImageHeight = parseEnvToInt("MAX_IMAGE_HEIGHT", 990)
-	cacheExp = parseEnvToInt("CACHE_EXPIRATION", 14400)  // 4 hours
-	maxCacheSize = parseEnvToInt("MAX_CACHE_SIZE", 1024) // Maximum amount of items in the cache
-	memoryCache = expirable.NewLRU[string, []byte](maxCacheSize, nil, time.Duration(cacheExp)*time.Second)
-
-	router.HandleFunc(route, Optimize)
-}
 
 func parseEnvToInt(envVar string, defaultValue int) int {
 	valueStr := os.Getenv(envVar)
@@ -189,15 +169,8 @@ func Optimize(w http.ResponseWriter, r *http.Request) {
 		axo.Error(w, "src is required", http.StatusBadRequest)
 		return
 	}
-	if !strings.HasPrefix(img, "http") {
-		switch {
-		case strings.HasPrefix(img, fmt.Sprintf("/api/%s/", staticPath)):
-		case strings.HasPrefix(img, fmt.Sprintf("/%s/", staticPath)):
-			img = path.Join("/api", img)
-		default:
-			img = path.Join("/api", staticPath, img)
-		}
-	}
+	//strip /api/ from img and assamble with targetPath
+	img = path.Join(targetPath, strings.TrimPrefix(img, "/api/"))
 
 	qualityStr := r.URL.Query().Get("quality")
 	quality, err := strconv.Atoi(qualityStr)

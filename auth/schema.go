@@ -5,17 +5,26 @@ import (
 )
 
 type User struct {
-	ID        uint      `json:"id" gorm:"primaryKey"`
+	//! Rquired fields
+	ID       uint   `json:"id" gorm:"primaryKey"`
+	Email    string `json:"email" gorm:"type:varchar(100);unique;not null"`
+	Password string `json:"-" gorm:"type:varchar(255);not null"`
+	RoleID   uint   `json:"role_id"`
+	Role     Role   `json:"role" gorm:"foreignKey:RoleID"`
+	Active   bool   `json:"active" gorm:"default:true"`
+	Verified bool   `json:"verified" gorm:"default:false"` // Email verified or not
+
+	// Timestamps
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	Email     string    `json:"email" gorm:"type:varchar(100);unique;not null"`
-	Username  string    `json:"username" gorm:"type:varchar(50);unique;not null"`
-	Password  string    `json:"-" gorm:"type:varchar(255);not null"`
-	FirstName string    `json:"first_name" gorm:"type:varchar(50)"`
-	LastName  string    `json:"last_name" gorm:"type:varchar(50)"`
-	RoleID    uint      `json:"role_id"`
-	Role      Role      `json:"role" gorm:"foreignKey:RoleID"`
-	Active    bool      `json:"active" gorm:"default:true"`
+
+	//? Optional fields
+	Username  string `json:"username" gorm:"type:varchar(50);unique"`
+	FirstName string `json:"first_name" gorm:"type:varchar(50)"`
+	LastName  string `json:"last_name" gorm:"type:varchar(50)"`
+	// Address   string `json:"address" gorm:"type:varchar(255)"`
+	// Phone     string `json:"phone" gorm:"type:varchar(20)"`
+	// etc. *You could create a separate table for user informations.
 }
 
 type Role struct {

@@ -52,6 +52,11 @@ input[type="number"],
 input[type="search"] {
   @apply w-full h-12 rounded-lg px-4 text-sm bg-comet-500 outline-none border-none;
 }
+
+select {
+  @apply appearance-none w-full h-12 rounded-lg px-4 text-sm bg-comet-500 outline-none border-none;
+}
+
 h1 {
   @apply text-3xl font-bold leading-[80%];
 }

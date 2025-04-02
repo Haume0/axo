@@ -13,6 +13,9 @@ func Register() {
 func Refresh() {
 	// TODO: Will refresh the user token.
 }
+func Verify() {
+	// TODO: Will verify the user email.
+}
 
 // User operations
 func CheckAuth() (bool, error) {
