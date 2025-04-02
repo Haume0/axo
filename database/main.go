@@ -1,6 +1,7 @@
 package database
 
 import (
+	"axo/auth"
 	"axo/database/schemas"
 	"fmt"
 	"log"
@@ -19,13 +20,14 @@ var DB *gorm.DB
 
 func Init() {
 	// Load environment variables
-	dsn := "host=" + os.Getenv("DB_HOST") +
-		" user=" + os.Getenv("DB_USER") +
-		" password=" + os.Getenv("DB_PASSWORD") +
-		" dbname=" + os.Getenv("DB_NAME") +
-		" port=" + os.Getenv("DB_PORT") +
-		" sslmode=" + os.Getenv("DB_SSLMODE") +
-		" TimeZone=" + os.Getenv("DB_TIMEZONE")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_SSLMODE"),
+		os.Getenv("DB_TIMEZONE"))
 
 	var err error
 
@@ -37,6 +39,16 @@ func Init() {
 	}
 	fmt.Println("✅ Connected to the database")
 
-	// Migrate the schema to create the tables
-	DB.AutoMigrate(&schemas.Note{})
+	// Gorm Auto Migration operation
+	// This will create the tables in the database if they do not exist.
+	DB.AutoMigrate(
+		//Demo Note application
+		&schemas.Note{},
+
+		// ⚠️ Axo Rest API Schemas ⚠️
+		// 🎭 Auth & Role System
+		&auth.User{},
+		&auth.Role{},
+		&auth.Permission{},
+	)
 }
