@@ -15,6 +15,8 @@ function RouteComponent() {
         const data = await res.json();
         setNotes(data);
       } else {
+        // Handle error
+        setNotes([]);
         console.error("Failed to fetch notes");
       }
     };
@@ -59,31 +61,32 @@ function RouteComponent() {
         <input type="text" name="Note" placeholder="Enter a note!" />
         <button>Add</button>
       </form>
-      <ul className="w-full min-h-[24rem] rounded-2xl gap-2 flex flex-col p-2 text-sm bg-comet-500 outline-none border-none">
+      <ul className="w-full min-h-[24rem] rounded-xl gap-2 flex flex-col p-2 text-sm bg-comet-500 outline-none border-none">
         <p className="font-semibold text-xs text-center text-white/40">
           Note List
         </p>
-        {notes.map((note, index) => (
-          <li
-            key={index}
-            className="w-full p-1 rounded-xl flex items-center justify-between text-sm bg-comet-600 outline-none border-none">
-            <p className="px-4">{note.title}</p>
-            <button
-              onClick={() => {
-                fetch(`/api/notes?id=${note.id}`, {
-                  method: "DELETE",
-                }).then((res) => {
-                  if (res.ok) {
-                    setNotes(notes.filter((n) => n.id !== note.id));
-                  } else {
-                    // alert("Failed to delete note");
-                  }
-                });
-              }}>
-              Delete
-            </button>
-          </li>
-        ))}
+        {notes &&
+          notes.map((note, index) => (
+            <li
+              key={index}
+              className="w-full p-1 rounded-xl flex items-center justify-between text-sm bg-comet-600 outline-none border-none">
+              <p className="px-4">{note.title}</p>
+              <button
+                onClick={() => {
+                  fetch(`/api/notes?id=${note.id}`, {
+                    method: "DELETE",
+                  }).then((res) => {
+                    if (res.ok) {
+                      setNotes(notes.filter((n) => n.id !== note.id));
+                    } else {
+                      // alert("Failed to delete note");
+                    }
+                  });
+                }}>
+                Delete
+              </button>
+            </li>
+          ))}
       </ul>
     </>
   );

@@ -49,7 +49,7 @@ function RouteComponent() {
       </div>
       <img
         src={imageUrl}
-        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10"
+        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-comet-500"
         alt=""
       />
       <h4 className="mt-12">Component Example</h4>
@@ -65,7 +65,7 @@ function RouteComponent() {
       <Img
         src="/api/static/axo.webp"
         alt="Vite logo"
-        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-black/10"
+        className="rounded-2xl object-contain w-full h-[27rem] p-4 bg-comet-500"
         // width={200} * Component can calculate the required width
         // height={200} * Component can calculate the required height
         quality={80}

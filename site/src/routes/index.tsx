@@ -31,14 +31,18 @@ function App() {
       <span className="w-full flex flex-col gap-2 p-2 rounded-xl">
         <div className="flex justify-center w-full items-center  gap-3">
           <button
-            className="w-full"
+            className={`w-full ease-in-out duration-300 ${
+              exampleUrl === "/api/hello" ? "!bg-accent" : ""
+            }`}
             onClick={() => {
               setExampleUrl("/api/hello");
             }}>
             Hello Example
           </button>
           <button
-            className="w-full"
+            className={`w-full ease-in-out duration-300 ${
+              exampleUrl === "/api/error" ? "!bg-accent" : ""
+            }`}
             onClick={() => {
               setExampleUrl("/api/error");
             }}>
