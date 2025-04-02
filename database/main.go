@@ -39,5 +39,4 @@ func Init() {
 
 	// Migrate the schema to create the tables
 	DB.AutoMigrate(&schemas.Note{})
-	println("✅ Database schema migrated")
 }

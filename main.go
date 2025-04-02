@@ -1,6 +1,7 @@
 package main
 
 import (
+	"axo/auth"
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
@@ -29,6 +30,7 @@ func main() {
 
 	// 🏁 Initializations !! Please do not change the order of the initialization operations. !!
 	database.Init()
+	auth.Init()
 
 	// 🏗️ Creating the router
 	router := http.NewServeMux()
