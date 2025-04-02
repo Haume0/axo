@@ -49,11 +49,12 @@ func main() {
 	// 🌍 Serving the Multi Page Application (MPA)
 	// frontends.ServeStatic(site, "/", "./site/dist")
 
-	// 🏙️ Image Optimization
-	img.Init(router, "/image", os.Getenv("STATIC_PATH"), "enabled")
-
 	// 🏗️ Static File Server
-	router.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(os.Getenv("STATIC_PATH")))))
+	var staticPath = "static"
+	router.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(staticPath))))
+
+	// 🏙️ Image Optimization
+	img.Init(router, "/image", staticPath, "enabled")
 
 	// ⚙️ Adding middlewares to router
 	routerWithMiddlewares := middlewares.Logger(router)

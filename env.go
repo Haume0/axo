@@ -81,9 +81,6 @@ JWT_EXPIRATION=1h
 # SMTP_PORT=587
 # SMTP_NOSSL=false
 
-# Static file server target folder
-STATIC_PATH=static
-
 # Image Optimization Values
 USE_BREAKPOINTS=true
 BREAKPOINT_WIDTHS=440,640,800,960,1120,1280,1440
