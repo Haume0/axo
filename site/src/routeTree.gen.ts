@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SmtpImport } from './routes/smtp'
+import { Route as RegisterImport } from './routes/register'
 import { Route as ImageImport } from './routes/image'
 import { Route as DatabaseImport } from './routes/database'
 import { Route as IndexImport } from './routes/index'
@@ -21,6 +22,12 @@ import { Route as IndexImport } from './routes/index'
 const SmtpRoute = SmtpImport.update({
   id: '/smtp',
   path: '/smtp',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImageImport
       parentRoute: typeof rootRoute
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
     '/smtp': {
       id: '/smtp'
       path: '/smtp'
@@ -83,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
+  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
@@ -90,6 +105,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
+  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
@@ -98,15 +114,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
+  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/database' | '/image' | '/smtp'
+  fullPaths: '/' | '/database' | '/image' | '/register' | '/smtp'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/database' | '/image' | '/smtp'
-  id: '__root__' | '/' | '/database' | '/image' | '/smtp'
+  to: '/' | '/database' | '/image' | '/register' | '/smtp'
+  id: '__root__' | '/' | '/database' | '/image' | '/register' | '/smtp'
   fileRoutesById: FileRoutesById
 }
 
@@ -114,6 +131,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DatabaseRoute: typeof DatabaseRoute
   ImageRoute: typeof ImageRoute
+  RegisterRoute: typeof RegisterRoute
   SmtpRoute: typeof SmtpRoute
 }
 
@@ -121,6 +139,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DatabaseRoute: DatabaseRoute,
   ImageRoute: ImageRoute,
+  RegisterRoute: RegisterRoute,
   SmtpRoute: SmtpRoute,
 }
 
@@ -137,6 +156,7 @@ export const routeTree = rootRoute
         "/",
         "/database",
         "/image",
+        "/register",
         "/smtp"
       ]
     },
@@ -148,6 +168,9 @@ export const routeTree = rootRoute
     },
     "/image": {
       "filePath": "image.tsx"
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/smtp": {
       "filePath": "smtp.tsx"

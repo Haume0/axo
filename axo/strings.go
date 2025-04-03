@@ -16,3 +16,11 @@ func RegexTest(text, pattern string) (bool, error) {
 	// Check if the text matches the compiled regex pattern
 	return re.MatchString(text), nil
 }
+
+// MultiReplace
+func MultiReplace(target string, replacements map[string]string) string {
+	for old, new := range replacements {
+		target = regexp.MustCompile(old).ReplaceAllString(target, new)
+	}
+	return target
+}

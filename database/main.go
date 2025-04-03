@@ -1,8 +1,7 @@
 package database
 
 import (
-	"axo/auth"
-	"axo/database/schemas"
+	"axo/models"
 	"fmt"
 	"log"
 	"os"
@@ -43,12 +42,12 @@ func Init() {
 	// This will create the tables in the database if they do not exist.
 	DB.AutoMigrate(
 		//Demo Note application
-		&schemas.Note{},
+		&models.Note{},
 
 		// ⚠️ Axo Rest API Schemas ⚠️
 		// 🎭 Auth & Role System
-		&auth.User{},
-		&auth.Role{},
-		&auth.Permission{},
+		&models.User{},
+		&models.Role{},
+		&models.Permission{},
 	)
 }

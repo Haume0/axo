@@ -2,14 +2,14 @@ package routes
 
 import (
 	"axo/database"
-	"axo/database/schemas"
+	"axo/models"
 	"encoding/json"
 	"net/http"
 )
 
 func GetNotes(w http.ResponseWriter, r *http.Request) {
 	//Find all notes
-	var notes []schemas.Note
+	var notes []models.Note
 	database.DB.Find(&notes)
 	//Return note
 	json.NewEncoder(w).Encode(notes)
@@ -23,7 +23,7 @@ func PostNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Create note
-	var newNote schemas.Note
+	var newNote models.Note
 	newNote.Title = note
 	//Save note
 	database.DB.Create(&newNote)
@@ -40,5 +40,5 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Delete note
-	database.DB.Delete(&schemas.Note{}, noteId)
+	database.DB.Delete(&models.Note{}, noteId)
 }

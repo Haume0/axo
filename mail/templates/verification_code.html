@@ -1,0 +1,53 @@
+<!-- Variables:
+{ // You can use `axo.MultiReplace` to replace these variables in the template 
+  "{{.login_code}}":  "The login code to be used in the app",
+  "{{.base_url}}":    "The base URL of the application",
+  "{{.title}}":       "The title of the email",
+  "{{.description}}": "The description or main message of the email",
+  "{{.sub_text}}":    "Additional information or subtext",
+  "{{.warning}}":     "Warning or disclaimer text",
+}
+ -->
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta name="x-apple-disable-message-reformatting" />
+</head>
+
+<body style="background-color:#667291; color: #ffffff; font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;">
+  <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation"
+    style="max-width:37.5em;padding-left:12px;padding-right:12px;margin:0 auto">
+    <tbody>
+      <tr style="width:100%">
+        <td>
+          <a href="{{.base_url}}"
+            style="color:#a3a4e7;text-decoration:underline;font-family:inherit;font-size:14px;margin:40px 0;font-weight:bold"
+            target="_blank">
+            <img alt="Logo" height="56" src="{{.base_url}}/api/axo.webp"
+              style="display:block;outline:none;border:none;text-decoration:none" /></a>
+          <h1 style="color:#ffffff;font-family:inherit;font-size:24px;font-weight:bold;padding:0">
+            {{.title}}</h1>
+          <p style="font-size:14px;line-height:24px;margin:24px 0;color:#d5d8e2;font-family:inherit;margin-bottom:14px">
+            {{.description}}</p>
+          <code
+            style="display:inline-block;padding:16px 4.5%;width:90.5%;background-color:#535c7a;border-radius:5px;border:1px solid #434961;color:#ffffff">
+           {{.login_code}}</code>
+          <p
+            style="font-size:14px;line-height:24px;margin:24px 0;color:#b0b6c9;font-family:inherit;margin-top:14px;margin-bottom:16px">
+            {{.sub_text}}</p>
+          <p
+            style="font-size:14px;line-height:24px;margin:24px 0;color:#b0b6c9;font-family:inherit;margin-top:12px;margin-bottom:38px">
+            {{.warning}}</p>
+          <p
+            style="font-size:12px;line-height:22px;margin:16px 0;color:#a3a4e7;font-family:inherit;margin-top:12px;margin-bottom:24px">
+            🪸 Axo Mail System 🌊</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

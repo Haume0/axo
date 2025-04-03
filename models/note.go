@@ -1,4 +1,4 @@
-package schemas
+package models
 
 // An example schematic for database tables
 type Note struct {
