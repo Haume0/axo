@@ -56,10 +56,32 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //	port       - string: The port number for the development server to listen on.
 //	sitePath   - string: The root directory of the project, used to run the development server.
 //	distPath   - string: The directory containing the production build of the SPA.
-func ServeSPA(router *http.ServeMux, route string, devCommand string, port string, sitePath string, distPath string) {
+func ServeSPA(router *http.ServeMux, route string, port string, sitePath string, distPath string, devCommand string, buildCommands []string) {
 	// Website Route
-	// Development mode
-	if os.Args[len(os.Args)-1] != "--prod" {
+	// Check if in production mode
+	if os.Args[len(os.Args)-1] == "--prod" {
+		// Production mode
+		// Run build commands if provided
+		if len(buildCommands) > 0 {
+			fmt.Println("Building production assets...")
+			for _, cmd := range buildCommands {
+				buildCmd := exec.Command("sh", "-c", cmd)
+				buildCmd.Dir = sitePath
+				buildCmd.Stdout = os.Stdout
+				buildCmd.Stderr = os.Stderr
+
+				fmt.Printf("Running: %s\n", cmd)
+				if err := buildCmd.Run(); err != nil {
+					log.Fatalf("Build command failed: %v", err)
+				}
+			}
+			fmt.Println("Build completed successfully")
+		}
+
+		// SPA HANDLER for production mode
+		spa := spaHandler{staticPath: distPath, indexPath: "index.html"}
+		router.Handle(route, spa)
+	} else {
 		// Development mode starting vite development server and proxying to it
 		go func() {
 			cmd := exec.Command("sh", "-c", fmt.Sprintf("%s -- --port %s", devCommand, port))
@@ -75,15 +97,10 @@ func ServeSPA(router *http.ServeMux, route string, devCommand string, port strin
 		}()
 		// Proxy to vite development server
 		router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
-			// Proxy to vite development server 5173 to /
+			// Proxy to vite development server on specified port
 			proxyURL := "http://localhost:" + port
 			//reverse proxy to vite development server
 			axo.ReverseProxy(w, r, proxyURL)
 		})
-	} else {
-		// SPA HANDLER
-		// Production mode
-		spa := spaHandler{staticPath: distPath, indexPath: "index.html"}
-		router.Handle("/", spa)
 	}
 }

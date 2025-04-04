@@ -5,9 +5,14 @@ export const Route = createFileRoute("/database")({
   component: RouteComponent,
 });
 
+interface Note {
+  id: number;
+  title: string;
+}
+
 function RouteComponent() {
   const [mloading, _mloading] = useState(false);
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   useEffect(() => {
     const fetchNotes = async () => {
       const res = await fetch("/api/notes");
@@ -52,7 +57,7 @@ function RouteComponent() {
             setNotes((prev) => [...prev, data]);
           }
           // Reset the Note input field after successful submission
-          e.target.elements.Note.value = "";
+          e.currentTarget.reset();
           _mloading(false);
         }}
         className={`flex gap-2 w-full ease-in-out duration-700 ${

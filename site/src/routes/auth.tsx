@@ -1,5 +1,5 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/auth")({
   component: RouteComponent,
@@ -7,7 +7,6 @@ export const Route = createFileRoute("/auth")({
 
 function RouteComponent() {
   const [screen, setScreen] = useState("");
-  const navigate = useNavigate();
   const [user, setUser] = useState<any>(undefined);
   return (
     <>

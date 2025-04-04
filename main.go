@@ -63,7 +63,16 @@ func main() {
 	router.HandleFunc("DELETE /notes", routes.DeleteNote)
 
 	// 🌍 Serving the Single Page Application (SPA)
-	frontends.ServeSPA(site, "/", "npm run dev", "5173", "./site", "./site/dist")
+	frontends.ServeSPA(
+		site, "/",
+		"5173",
+		"./site", "./site/dist",
+		"bun run dev",
+		[]string{
+			"bun install",
+			"bun run build",
+		},
+	)
 	// 🌍 Serving the Multi Page Application (MPA)
 	// frontends.ServeStatic(site, "/", "./site/dist")
 
