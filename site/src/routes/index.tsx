@@ -16,7 +16,7 @@ function App() {
         more information, please click the logo above.
       </p>
       <h4 className="mt-6">Examples</h4>
-      <div className="flex justify-center w-full items-center gap-3">
+      <div className="grid grid-cols-3 justify-center w-full items-center gap-3">
         <Link to="/image" className="w-full">
           <button className="w-full">Image Optimization</button>
         </Link>
@@ -25,6 +25,9 @@ function App() {
         </Link>
         <Link to="/database" className="w-full">
           <button className="w-full">Database</button>
+        </Link>
+        <Link to="/auth" className="w-full">
+          <button className="w-full">Auth</button>
         </Link>
       </div>
       <h4 className="mt-6">Hello World Examples</h4>

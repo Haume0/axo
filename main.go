@@ -7,7 +7,9 @@ import (
 	"axo/database"
 	"axo/img"
 	"axo/middlewares"
+	"axo/models"
 	"axo/routes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -39,6 +41,17 @@ func main() {
 	// ⚠️ Axo Rest API Routes ⚠️
 	// 🎭 Auth Routes
 	router.HandleFunc("POST /auth/register", auth.RegisterRoute)
+	router.HandleFunc("POST /auth/login", auth.LoginRoute)
+	//!DEV
+	if os.Args[len(os.Args)-1] != "--prod" {
+		router.HandleFunc("GET /auth/users", func(w http.ResponseWriter, r *http.Request) {
+			var users []models.User
+			database.DB.Preload("Role").Find(&users)
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(users)
+		})
+	}
+	//!DEV
 	// 🌐 Registering the routes
 	router.HandleFunc("GET /error", routes.GetError)
 	router.HandleFunc("GET /hello", routes.GetHello)

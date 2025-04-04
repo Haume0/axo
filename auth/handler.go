@@ -13,8 +13,35 @@ func Logout() {
 	// TODO: Will logout the user.
 }
 
-func Login() {
-	// TODO: Will login the user.
+func Login(email string, password string) (models.User, error) {
+	//Check user.Mail with MailRegex
+	if !axo.Unwrap(axo.RegexTest(email, models.MailRegex)) {
+		return models.User{}, fmt.Errorf("BAD_MAIL_FORMAT")
+	}
+
+	//Check user.Password with PasswordRegex
+	if !axo.Unwrap(axo.RegexTest(password, models.PasswordRegex)) {
+		return models.User{}, fmt.Errorf("BAD_PASSWORD_FORMAT")
+	}
+
+	//sha256 hash the password
+	sha := sha256.New()
+	sha.Write([]byte(password))
+	password = fmt.Sprintf("%x", sha.Sum(nil))
+
+	var user models.User
+	database.DB.Preload("Role").Where("email = ? AND password = ?", email, password).First(&user)
+	if user.ID == 0 {
+		return models.User{}, fmt.Errorf("USER_NOT_FOUND")
+	}
+	if !user.Active {
+		return models.User{}, fmt.Errorf("USER_NOT_ACTIVE")
+	}
+	if !user.Verified {
+		return models.User{}, fmt.Errorf("USER_NOT_VERIFIED")
+	}
+	return user, nil
+
 }
 
 func Register(user models.User) error {

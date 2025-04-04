@@ -12,9 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SmtpImport } from './routes/smtp'
-import { Route as RegisterImport } from './routes/register'
 import { Route as ImageImport } from './routes/image'
 import { Route as DatabaseImport } from './routes/database'
+import { Route as AuthImport } from './routes/auth'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -22,12 +22,6 @@ import { Route as IndexImport } from './routes/index'
 const SmtpRoute = SmtpImport.update({
   id: '/smtp',
   path: '/smtp',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const RegisterRoute = RegisterImport.update({
-  id: '/register',
-  path: '/register',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -40,6 +34,12 @@ const ImageRoute = ImageImport.update({
 const DatabaseRoute = DatabaseImport.update({
   id: '/database',
   path: '/database',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +60,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
     '/database': {
       id: '/database'
       path: '/database'
@@ -72,13 +79,6 @@ declare module '@tanstack/react-router' {
       path: '/image'
       fullPath: '/image'
       preLoaderRoute: typeof ImageImport
-      parentRoute: typeof rootRoute
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
     '/smtp': {
@@ -95,51 +95,51 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
-  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
-  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/database': typeof DatabaseRoute
   '/image': typeof ImageRoute
-  '/register': typeof RegisterRoute
   '/smtp': typeof SmtpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/database' | '/image' | '/register' | '/smtp'
+  fullPaths: '/' | '/auth' | '/database' | '/image' | '/smtp'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/database' | '/image' | '/register' | '/smtp'
-  id: '__root__' | '/' | '/database' | '/image' | '/register' | '/smtp'
+  to: '/' | '/auth' | '/database' | '/image' | '/smtp'
+  id: '__root__' | '/' | '/auth' | '/database' | '/image' | '/smtp'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   DatabaseRoute: typeof DatabaseRoute
   ImageRoute: typeof ImageRoute
-  RegisterRoute: typeof RegisterRoute
   SmtpRoute: typeof SmtpRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   DatabaseRoute: DatabaseRoute,
   ImageRoute: ImageRoute,
-  RegisterRoute: RegisterRoute,
   SmtpRoute: SmtpRoute,
 }
 
@@ -154,23 +154,23 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth",
         "/database",
         "/image",
-        "/register",
         "/smtp"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/auth": {
+      "filePath": "auth.tsx"
+    },
     "/database": {
       "filePath": "database.tsx"
     },
     "/image": {
       "filePath": "image.tsx"
-    },
-    "/register": {
-      "filePath": "register.tsx"
     },
     "/smtp": {
       "filePath": "smtp.tsx"

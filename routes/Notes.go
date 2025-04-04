@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"axo/axo"
 	"axo/database"
 	"axo/models"
 	"encoding/json"
@@ -19,7 +20,7 @@ func PostNote(w http.ResponseWriter, r *http.Request) {
 	var note = r.URL.Query().Get("note")
 	//Check if note is empty
 	if note == "" {
-		http.Error(w, "note is empty", http.StatusBadRequest)
+		axo.Error(w, "note is empty", http.StatusBadRequest)
 		return
 	}
 	//Create note
@@ -36,7 +37,7 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 	var noteId = r.URL.Query().Get("id")
 	//Check if note id is empty
 	if noteId == "" {
-		http.Error(w, "note id is empty", http.StatusBadRequest)
+		axo.Error(w, "note id is empty", http.StatusBadRequest)
 		return
 	}
 	//Delete note
