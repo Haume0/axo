@@ -52,10 +52,11 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //
 //	router     - *http.ServeMux: The HTTP router to handle incoming requests.
 //	route      - string: The URL path prefix for the SPA (e.g., "/").
-//	devCommand - string: The command to start the development server (e.g., "npm run dev").
-//	port       - string: The port number for the development server to listen on.
-//	sitePath   - string: The root directory of the project, used to run the development server.
-//	distPath   - string: The directory containing the production build of the SPA.
+//	port       - string: The port on which the development server will run (e.g., "5173").
+//	sitePath   - string: The path to the SPA source code directory (e.g., "./site").
+//	distPath    - string: The path to the distribution directory containing built assets (e.g., "./site/dist").
+//	devCommand - [2]string: 0: The command to install dependencies (e.g., "npm install"), 1: The command to start the development server (e.g., "npm run dev").
+//	buildCommands - []string: A list of commands to build the production assets (e.g., ["npm run build"]) for the SPA.
 func ServeSPA(router *http.ServeMux, route string, port string, sitePath string, distPath string, devCommand [2]string, buildCommands []string) {
 	// Website Route
 	// Check if in production mode
