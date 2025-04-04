@@ -14,7 +14,7 @@ func InitDotenv() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		fmt.Println("❌ .env file not found!")
-		fmt.Println("👋 Wanna create a .env file? (y/n)")
+		fmt.Println("👋 Wanna create a .env file? (Y/n)")
 		tty, err := tty.Open()
 		if err != nil {
 			log.Fatal(err)
@@ -25,7 +25,7 @@ func InitDotenv() {
 			log.Fatal(err)
 		}
 
-		if char == 'y' || char == 'Y' {
+		if char == 'y' || char == 'Y' || char == '\n' || char == '\r' {
 			fmt.Println("Creating default .env file...")
 			os.WriteFile(".env", []byte(defaultDotenv), 0644)
 			fmt.Print("\033[H\033[2J")
