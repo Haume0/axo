@@ -41,7 +41,7 @@ func InitDotenv() {
 		}
 	} else {
 		// fmt.Print("\033[H\033[2J")
-		fmt.Println("✅ .env file founded.")
+		fmt.Println("✅ .env file found")
 	}
 }
 

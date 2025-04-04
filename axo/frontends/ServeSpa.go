@@ -56,7 +56,7 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //	port       - string: The port number for the development server to listen on.
 //	sitePath   - string: The root directory of the project, used to run the development server.
 //	distPath   - string: The directory containing the production build of the SPA.
-func ServeSPA(router *http.ServeMux, route string, port string, sitePath string, distPath string, devCommand string, buildCommands []string) {
+func ServeSPA(router *http.ServeMux, route string, port string, sitePath string, distPath string, devCommand [2]string, buildCommands []string) {
 	// Website Route
 	// Check if in production mode
 	if os.Args[len(os.Args)-1] == "--prod" {
@@ -83,8 +83,21 @@ func ServeSPA(router *http.ServeMux, route string, port string, sitePath string,
 		router.Handle(route, spa)
 	} else {
 		// Development mode starting vite development server and proxying to it
+		// Check if node_modules exist
+		if _, err := os.Stat(filepath.Join(sitePath, "node_modules")); os.IsNotExist(err) {
+			// If not, run the install command
+			installCmd := exec.Command("sh", "-c", devCommand[0])
+			installCmd.Dir = sitePath
+			installCmd.Stdout = os.Stdout
+			installCmd.Stderr = os.Stderr
+			fmt.Println("Running: " + devCommand[0])
+			if err := installCmd.Run(); err != nil {
+				log.Fatalf("Install command failed: %v", err)
+			}
+			fmt.Println("Install completed successfully")
+		}
 		go func() {
-			cmd := exec.Command("sh", "-c", fmt.Sprintf("%s -- --port %s", devCommand, port))
+			cmd := exec.Command("sh", "-c", fmt.Sprintf("%s -- --port %s", devCommand[1], port))
 			// Change directory to the root of the project
 			cmd.Dir = sitePath
 			if os.Getenv("verbose") == "true" {

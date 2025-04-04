@@ -67,7 +67,10 @@ func main() {
 		site, "/",
 		"5173",
 		"./site", "./site/dist",
-		"bun run dev",
+		[2]string{
+			"bun install",
+			"bun dev",
+		},
 		[]string{
 			"bun install",
 			"bun run build",
