@@ -41,18 +41,18 @@ func ReverseProxy(w http.ResponseWriter, r *http.Request, target string) {
 	proxy.ServeHTTP(w, r)
 }
 
-// CookieValue : handles getting cookie value and returning base of key
-func CookieValue(r *http.Request, key string) string {
+// GetCookie : handles getting cookie value and returning base of key
+func GetCookie(r *http.Request, key string) (string, error) {
 	cookie, err := r.Cookie(key)
 	if err != nil {
-		return ""
+		return "", err
 	}
 	val, err := url.QueryUnescape(cookie.Value)
 	if err != nil {
 		println(err.Error())
-		return ""
+		return "", err
 	}
-	return val
+	return val, nil
 }
 
 // GetLanguage : returns language from header
@@ -64,8 +64,8 @@ func GetLanguage(r *http.Request, first ...bool) any {
 	}
 
 	// Check cookie
-	cookie := CookieValue(r, "accept-language")
-	if cookie != "" {
+	cookie, err := GetCookie(r, "accept-language")
+	if err == nil {
 		if useFirst {
 			return strings.Split(cookie, ",")[0]
 		}

@@ -1,6 +1,7 @@
 package axo
 
 /*
+    Warning!
 	Quality of Life Functions
 	These functions are designed to make error handling easier and preventing code duplication.
 	They are not meant to be used in certain cases, such as no way to get the error or when

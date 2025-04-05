@@ -73,7 +73,7 @@ func Register(user models.User) error {
 }
 
 func Refresh() {
-	// TODO: Will refresh the user token.
+	// TODO: Will refresh the user token using refresh token.
 }
 
 func Verify() {
