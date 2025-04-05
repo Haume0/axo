@@ -1,6 +1,7 @@
 package main
 
 import (
+	"axo/flags"
 	"fmt"
 	"log"
 	"os"
@@ -13,16 +14,20 @@ import (
 func InitDotenv() {
 	err := godotenv.Load(".env")
 	if err != nil {
+		var char rune = 'n'
 		fmt.Println("❌ .env file not found!")
 		fmt.Println("👋 Wanna create a .env file? (Y/n)")
-		tty, err := tty.Open()
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer tty.Close()
-		char, err := tty.ReadRune()
-		if err != nil {
-			log.Fatal(err)
+		// Ask for user input
+		if !*flags.IsProduction {
+			tty, err := tty.Open()
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer tty.Close()
+			char, err = tty.ReadRune()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		if char == 'y' || char == 'Y' || char == '\n' || char == '\r' {

@@ -2,6 +2,7 @@ package frontends
 
 import (
 	"axo/axo"
+	"axo/flags"
 	"fmt"
 	"log"
 	"net/http"
@@ -60,7 +61,7 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func ServeSPA(router *http.ServeMux, route string, port string, sitePath string, distPath string, devCommand [2]string, buildCommands []string) {
 	// Website Route
 	// Check if in production mode
-	if os.Args[len(os.Args)-1] == "--prod" {
+	if *flags.IsProduction {
 		// Production mode
 		// Run build commands if provided
 		if len(buildCommands) > 0 {

@@ -5,6 +5,7 @@ import (
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
+	"axo/flags"
 	"axo/img"
 	"axo/middlewares"
 	"axo/models"
@@ -27,6 +28,9 @@ It's not neccesary but i'll be greatful if you give me a star on GitHub and ment
 */
 
 func main() {
+	// 🔒 Command line flags
+	flags.Init()
+
 	// 🔐 Getting the environment variables !! Dont put any print operation above .env initialization. !!
 	InitDotenv()
 
@@ -43,7 +47,7 @@ func main() {
 	router.HandleFunc("POST /auth/register", auth.RegisterRoute)
 	router.HandleFunc("POST /auth/login", auth.LoginRoute)
 	//!DEV
-	if os.Args[len(os.Args)-1] != "--prod" {
+	if *flags.IsProduction {
 		router.HandleFunc("GET /auth/users", func(w http.ResponseWriter, r *http.Request) {
 			var users []models.User
 			database.DB.Preload("Role").Find(&users)
