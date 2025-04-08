@@ -47,7 +47,7 @@ func main() {
 	router.HandleFunc("POST /auth/register", auth.RegisterRoute)
 	router.HandleFunc("POST /auth/login", auth.LoginRoute)
 	//!DEV
-	if *flags.IsProduction {
+	if !*flags.IsProduction {
 		router.HandleFunc("GET /auth/users", func(w http.ResponseWriter, r *http.Request) {
 			var users []models.User
 			database.DB.Preload("Role").Find(&users)
@@ -81,7 +81,13 @@ func main() {
 		},
 	)
 	// 🌍 Serving the Multi Page Application (MPA)
-	// frontends.ServeStatic(site, "/", "./site/dist")
+	// frontends.ServeStatic(site, "/", "./site/dist",
+	// 	[]string{ // Last argument is optional,
+	// 		// if your static site needs'a build step please add build steps here
+	// 		"./site", // Target folder
+	// 		"bun install", //build command
+	// 		"bun run build", //build command
+	// 	})
 
 	// 🏗️ Static File Server
 	var staticPath = "static"
