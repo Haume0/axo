@@ -94,7 +94,7 @@ func main() {
 	router.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(staticPath))))
 
 	// 🏙️ Image Optimization
-	img.Init(router, "/image", staticPath, "enabled")
+	img.Init(router, "/image", staticPath, os.Getenv("ENABLE_IMAGE_OPTIMIZATION"))
 
 	// ⚙️ Adding middlewares to router
 	routerWithMiddlewares := middlewares.Logger(router)

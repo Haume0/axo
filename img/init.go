@@ -39,9 +39,9 @@ func enabled(router *http.ServeMux, route string, staticPath string) {
 
 func Init(router *http.ServeMux, route string, staticPath string, enabledOrDisabled string) {
 	switch enabledOrDisabled {
-	case "enabled":
+	case "true":
 		enabled(router, route, staticPath)
-	case "disabled":
+	case "false":
 		disabled(router, route)
 	default:
 		disabled(router, route)
