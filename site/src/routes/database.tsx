@@ -57,7 +57,6 @@ function RouteComponent() {
             setNotes((prev) => [...prev, data]);
           }
           // Reset the Note input field after successful submission
-          e.currentTarget.reset();
           _mloading(false);
         }}
         className={`flex gap-2 w-full ease-in-out duration-700 ${
