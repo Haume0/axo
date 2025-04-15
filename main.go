@@ -16,17 +16,6 @@ import (
 	"os"
 )
 
-/*
-🪸 Welcome to Axo 🌊
-Axo is a Restful API scaffold for Go, built on top of stdlib and gorm.
-It is designed to be simple, fast, and easy to use.
-For more information, please visit: https://haume.me/axo
-
-License: MIT
-Copyright (c) 2025 Haume
-It's not neccesary but i'll be greatful if you give me a star on GitHub and mention me in your project.
-*/
-
 func main() {
 	// 🔒 Command line flags
 	flags.Init()
@@ -46,6 +35,10 @@ func main() {
 	// 🎭 Auth Routes
 	router.HandleFunc("POST /auth/register", auth.RegisterRoute)
 	router.HandleFunc("POST /auth/login", auth.LoginRoute)
+	router.HandleFunc("/auth/logout", auth.LogoutRoute)
+	router.HandleFunc("POST /auth/verify", auth.VerifyRoute)
+	router.HandleFunc("POST /auth/refresh", auth.RefreshRoute)
+
 	//!DEV
 	if !*flags.IsProduction {
 		router.HandleFunc("GET /auth/users", func(w http.ResponseWriter, r *http.Request) {
@@ -53,6 +46,17 @@ func main() {
 			database.DB.Preload("Role").Find(&users)
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(users)
+		})
+		router.HandleFunc("GET /tokens", func(w http.ResponseWriter, r *http.Request) {
+			var del = r.URL.Query().Get("del")
+			var tokens []models.RefreshToken
+			database.DB.Find(&tokens)
+			if del == "true" {
+				for _, token := range tokens {
+					database.DB.Delete(&token)
+				}
+			}
+			json.NewEncoder(w).Encode(tokens)
 		})
 	}
 	//!DEV

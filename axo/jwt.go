@@ -8,9 +8,9 @@ import (
 )
 
 // GenerateToken creates a JWT token with given secret key, expiry time, and custom claims.
-func GenerateToken(secretKey string, expiry time.Duration, claims map[string]any) (string, error) {
+func GenerateToken(secretKey string, expiry time.Time, claims map[string]any) (string, error) {
 	// Token süresi ekleniyor
-	claims["exp"] = time.Now().Add(expiry).Unix()
+	claims["exp"] = expiry.Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(claims))
 	return token.SignedString([]byte(secretKey))

@@ -19,11 +19,25 @@ function RouteComponent() {
       <Link to="/">
         <button>← Back to Home</button>
       </Link>
-      <span className="flex flex-col gap-1 w-full">
+      <span className="flex flex-col text-start gap-1 w-full">
         <p className="text-xs">Server response message:</p>
-        <p className="bg-comet-700 p-2 min-h-9 rounded-lg w-full font-mono">
-          {screen}
-        </p>
+        {screen ? (
+          <div className="bg-comet-700 p-2 min-h-9 rounded-lg w-full font-mono">
+            {typeof screen === "string" ? (
+              screen.startsWith("{") && screen.endsWith("}") ? (
+                <pre>{JSON.stringify(JSON.parse(screen), null, 2)}</pre>
+              ) : (
+                <p>{screen}</p>
+              )
+            ) : (
+              <pre>{JSON.stringify(screen, null, 2)}</pre>
+            )}
+          </div>
+        ) : (
+          <div className="bg-comet-700 break-words p-2 min-h-9 rounded-lg w-full font-mono">
+            <p>No response yet</p>
+          </div>
+        )}
       </span>
       {user != undefined && (
         <div className="rounded-xl bg-comet-700 p-2 w-full flex flex-col gap-1">
@@ -57,7 +71,8 @@ function RouteComponent() {
             </span>
             <div className="flex items-center justify-center gap-2 bg-comet-600 p-2 rounded-md w-full">
               <span
-                className={`h-2 w-2 rounded-full ${user.active ? "bg-green-500" : "bg-red-500"}`}></span>
+                className={`h-2 w-2 rounded-full ${user.active ? "bg-green-500" : "bg-red-500"}`}
+              ></span>
               <span className="text-comet-100">
                 {user.active ? "Active" : "Inactive"}
               </span>
@@ -68,7 +83,8 @@ function RouteComponent() {
             </span>
             <div className="flex items-center justify-center gap-2 bg-comet-600 p-2 rounded-md w-full">
               <span
-                className={`h-2 w-2 rounded-full ${user.verified ? "bg-green-500" : "bg-yellow-500"}`}></span>
+                className={`h-2 w-2 rounded-full ${user.verified ? "bg-green-500" : "bg-yellow-500"}`}
+              ></span>
               <span className="text-comet-100">
                 {user.verified ? "Verified" : "Not Verified"}
               </span>
@@ -89,7 +105,8 @@ function RouteComponent() {
           </div>
           <button
             className="bg-comet-600 hover:bg-comet-500 p-2 w-full"
-            onClick={() => setUser(undefined)}>
+            onClick={() => setUser(undefined)}
+          >
             Logout
           </button>
         </div>
@@ -105,17 +122,19 @@ function RouteComponent() {
             const res = await fetch("/api/auth/login", {
               method: "POST",
               body: formData,
+              credentials: "include",
             });
             if (res.ok) {
               const usr = await res.json();
-              setScreen("Successfully logged in!");
-              setUser(usr);
+              setScreen(JSON.stringify(usr));
+              // setUser(usr);
             } else {
               const data = await res.json();
               setScreen(data.error);
             }
           }}
-          className="grid w-full grid-cols-2 grid-flow-row gap-2">
+          className="grid w-full grid-cols-2 grid-flow-row gap-2"
+        >
           <input
             type="email"
             name="email"
@@ -156,7 +175,8 @@ function RouteComponent() {
               setScreen(data.error);
             }
           }}
-          className="grid w-full grid-cols-2 grid-flow-row gap-2">
+          className="grid w-full grid-cols-2 grid-flow-row gap-2"
+        >
           <input
             type="email"
             name="email"

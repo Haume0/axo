@@ -59,6 +59,7 @@ const defaultDotenv = `
 # Server Values
 PORT=3000
 HOST=localhost
+BASE_URL=http://localhost:3000/
 
 # TLS Values * If you don't use TLS, you can remove these values or leave them empty.
 # If you're using TLS, you need to set the values for these variables.
@@ -91,7 +92,7 @@ ENABLE_IMAGE_OPTIMIZATION=true
 USE_BREAKPOINTS=true
 BREAKPOINT_WIDTHS=440,640,800,960,1120,1280,1440
 BREAKPOINT_HEIGHTS=440,640,800,960,1120,1280,1440
-CACHE_DIR=memory
+CACHE_DIR=memory # memory: caches images in memory, ./img/cache: caches images in disk
 MAX_IMAGE_WIDTH=1440
 MAX_IMAGE_HEIGHT=990
 CACHE_EXPIRATION=14400

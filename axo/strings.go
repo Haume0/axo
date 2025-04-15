@@ -1,7 +1,9 @@
 package axo
 
 import (
+	"math/rand"
 	"regexp"
+	"strings"
 )
 
 // RegexTest checks if the given text matches the provided regex pattern.
@@ -23,4 +25,41 @@ func MultiReplace(target string, replacements map[string]string) string {
 		target = regexp.MustCompile(old).ReplaceAllString(target, new)
 	}
 	return target
+}
+
+func GenerateMemCode(blockCount int) string {
+	// Genişletilmiş kelime listesi
+	words := []string{
+		"blue", "cake", "door", "fish", "gold", "home", "jump", "king",
+		"lamp", "moon", "note", "park", "queen", "road", "star", "tree",
+		"wind", "book", "duck", "frog", "goat", "hill", "kite", "lion",
+		"milk", "nest", "owl", "pear", "rain", "song", "time", "wave",
+		"bird", "card", "cool", "dark", "echo", "fire", "glow", "hope",
+		"iris", "jade", "lava", "mint", "nova", "opal", "pink", "quiz",
+		"rice", "snow", "tone", "undo", "view", "wood", "xray", "yarn",
+		"zinc", "acme", "brio", "clay", "dune", "envy", "flux", "grin",
+	}
+
+	// Blok sayısı kelime sayısından fazla olamaz
+	if blockCount > len(words) {
+		blockCount = len(words)
+	}
+
+	used := make(map[string]bool)
+	var parts []string
+
+	for len(parts) < blockCount {
+		index := rand.Intn(len(words))
+		word := words[index]
+		if used[word] {
+			continue
+		}
+		used[word] = true
+		if len(word) > 4 {
+			word = word[:4]
+		}
+		parts = append(parts, word)
+	}
+
+	return strings.Join(parts, "-")
 }

@@ -44,3 +44,15 @@ type Permission struct {
 	Method string `json:"method" gorm:"type:varchar(10);not null"` // GET, POST, PUT, DELETE etc. * for all.
 	Path   string `json:"path" gorm:"type:varchar(100);not null"`  // /api/v1/users etc. * for all.
 }
+
+//Tokens
+
+type RefreshToken struct {
+	ID        uint      `json:"id" gorm:"primaryKey"`
+	UserID    uint      `json:"user_id" gorm:"not null"`
+	Token     string    `json:"token" gorm:"type:varchar(255);not null"`
+	CreatedAt time.Time `json:"created_at"`
+	Exp       time.Time `json:"updated_at"`
+	//We can remove the token from the database instead of revoking it.
+	// Revoked   bool      `json:"revoked" gorm:"default:false"`
+}

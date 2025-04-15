@@ -49,5 +49,6 @@ func Init() {
 		&models.User{},
 		&models.Role{},
 		&models.Permission{},
+		&models.RefreshToken{},
 	)
 }
