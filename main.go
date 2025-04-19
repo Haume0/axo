@@ -2,6 +2,7 @@ package main
 
 import (
 	"axo/auth"
+	auth_routes "axo/auth/routes"
 	"axo/axo"
 	"axo/axo/frontends"
 	"axo/database"
@@ -33,11 +34,12 @@ func main() {
 
 	// ⚠️ Axo Rest API Routes ⚠️
 	// 🎭 Auth Routes
-	router.HandleFunc("POST /auth/register", auth.RegisterRoute)
-	router.HandleFunc("POST /auth/login", auth.LoginRoute)
-	router.HandleFunc("/auth/logout", auth.LogoutRoute)
-	router.HandleFunc("POST /auth/verify", auth.VerifyRoute)
-	router.HandleFunc("POST /auth/refresh", auth.RefreshRoute)
+	router.HandleFunc("POST /auth/register", auth_routes.Register)
+	router.HandleFunc("POST /auth/login", auth_routes.Login)
+	router.HandleFunc("/auth/logout", auth_routes.Logout)
+	router.HandleFunc("/auth/refresh", auth_routes.Refresh)
+	router.HandleFunc("/auth/verify", auth_routes.Verify)
+	router.HandleFunc("/auth/reset-password", auth_routes.ResetPassword)
 
 	//!DEV
 	if !*flags.IsProduction {

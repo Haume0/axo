@@ -27,6 +27,7 @@ func ClearRefTokens(user models.User) {
 		}
 	}
 }
+
 func GenerateAccesToken(user models.User) (TokenResponse, error) {
 	// 15min
 	var exp time.Time = time.Now().Add(15 * time.Minute)
@@ -49,6 +50,7 @@ func GenerateAccesToken(user models.User) (TokenResponse, error) {
 		Exp:   exp,
 	}, nil
 }
+
 func GenerateRefreshToken(user models.User) (TokenResponse, error) {
 	// 30 days
 	var exp time.Time = time.Now().Add(30 * 24 * time.Hour)

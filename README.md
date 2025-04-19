@@ -11,21 +11,20 @@ It's not neccesary but i'll be greatful if you give me a star on GitHub and ment
 
 ## Roadmap
 - Auth System **[Priority]**
-    - [ ] Implement Refresh Token and Access Token
-    - [ ] Store Tokens in cookies for quick access
-    - [ ] Implement Mail Verification and 2FA (later)
-    - [ ] Implement Password Reset or Recovery
+    - [x] Implement Refresh Token and Access Token
+    - [x] Store Tokens in cookies for quick access
+    - [x] Implement Mail Verification and 2FA (later)
+    - [x] Implement Password Reset or Recovery
     - [x] Implement Account Creation
-    - [ ] Implement Account Update
     - [x] Implement Account Login
-    - [ ] Implement Account Logout
-    - [ ] Implement Account Activation
-    - [ ] Implement Account Deactivation
+    - [x] Implement Account Logout
+    - [x] Implement Account Activation
+    - [x] Implement Account Deactivation
 - Roles & Permissions **[Priority]**
     - [x] Implement Roles and Permissions
     - [x] Implement Method:Route based permissions
     - [x] Implement Default Permissions (default,admin)
-    - [ ] Implement Permission Handlers
+    - [x] Implement Permission Handlers
     - [ ] Implement Permission Middleware
     - [ ] Implement Role Hierarchy
     - [ ] Implement Role-based Access Control (RBAC)

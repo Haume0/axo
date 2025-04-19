@@ -12,10 +12,6 @@ import (
 	"time"
 )
 
-// User operations
-func Auth(token string) (models.User, error) {
-	return models.User{}, nil
-}
 func Login(email string, password string) (models.User, error) {
 	//Check user.Mail with MailRegex
 	if !axo.Unwrap(axo.RegexTest(email, models.MailRegex)) {
@@ -35,7 +31,7 @@ func Login(email string, password string) (models.User, error) {
 	var user models.User
 	database.DB.Preload("Role").Where("email = ? AND password = ?", email, password).First(&user)
 	if user.ID == 0 {
-		return models.User{}, fmt.Errorf("USER_NOT_FOUND")
+		return models.User{}, fmt.Errorf("UNAUTHORIZED")
 	}
 	if !user.Active {
 		return models.User{}, fmt.Errorf("USER_NOT_ACTIVE")
@@ -100,13 +96,18 @@ func Refresh(ref_token string) (TokenResponse, error) {
 	return accesToken, nil
 }
 
-// User operations
-func CheckAuth() (bool, error) {
-	// TODO: Will check if user is authenticated or not.
-	return false, nil
+func GetUserByID(id uint) (models.User, error) {
+	var user models.User
+	if err := database.DB.Preload("Role").First(&user, id).Error; err != nil {
+		return models.User{}, err
+	}
+	if user.ID == 0 {
+		return models.User{}, fmt.Errorf("USER_NOT_FOUND")
+	}
+	return user, nil
 }
 
-func GetUserJWT(token string) (models.User, error) {
+func GetUserByJWT(token string) (models.User, error) {
 	userMap, err := axo.VerifyToken(
 		os.Getenv("JWT_SECRET"),
 		token,
@@ -121,10 +122,11 @@ func GetUserJWT(token string) (models.User, error) {
 	}
 	return user, nil
 }
-func GetUser(r *http.Request) (models.User, error) {
+
+func GetUserRequest(r *http.Request) (models.User, error) {
 	// Try to get token from cookie first
 	if token, err := axo.GetCookie(r, "axo_auth_acc"); err == nil {
-		user, err := GetUserJWT(token)
+		user, err := GetUserByJWT(token)
 		if err != nil {
 			return models.User{}, err
 		}
@@ -144,9 +146,32 @@ func GetUser(r *http.Request) (models.User, error) {
 		return models.User{}, fmt.Errorf("NO_AUTH_TOKEN")
 	}
 
-	user, err := GetUserJWT(token)
+	user, err := GetUserByJWT(token)
 	if err != nil {
 		return models.User{}, err
 	}
 	return user, nil
+}
+
+func DeactivateUser(id uint) error {
+	var user models.User
+	if err := database.DB.First(&user, id).Error; err != nil {
+		return err
+	}
+	user.Active = false
+	if err := database.DB.Save(&user).Error; err != nil {
+		return err
+	}
+	return nil
+}
+func ActivateUser(id uint) error {
+	var user models.User
+	if err := database.DB.First(&user, id).Error; err != nil {
+		return err
+	}
+	user.Active = true
+	if err := database.DB.Save(&user).Error; err != nil {
+		return err
+	}
+	return nil
 }
